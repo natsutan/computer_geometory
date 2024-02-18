@@ -44,8 +44,38 @@ class Point:
     def angle(self, other):
         return math.acos(self.dot(other) / (self.length() * other.length()))
 
+    def rotate(self, center, angle):
+        x = self.x - center.x
+        y = self.y - center.y
+        # angleをラジアンに変換する
+        angle = math.radians(angle)
+
+        x1 = x * math.cos(angle) - y * math.sin(angle)
+        y1 = x * math.sin(angle) + y * math.cos(angle)
+        return Point(x1 + center.x, y1 + center.y)
+
+class Line:
+    def __init__(self, p1:Point, p2:Point):
+        self.p1 = p1
+        self.p2 = p2
+
+    def __str__(self):
+        return f'({self.p1}, {self.p2})'
+
+    def __repr__(self):
+        return f'Line({self.p1}, {self.p2})'
+
+    def __eq__(self, other):
+        return self.p1 == other.p1 and self.p2 == other.p2
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
+
 def midpoint(p1:Point, p2:Point) -> Point:
     x = (p1.x + p2.x) / 2
     y = (p1.y + p2.y) / 2
 
     return Point(int(x), int(y))
+
